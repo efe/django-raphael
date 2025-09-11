@@ -10,6 +10,7 @@ Django’s async ORM currently runs asynchronous calls in [a separate thread](ht
 
 ```python
 # books/models.py
+from django_raphael.models import RaphaelMixin
 
 class Book(RaphaelMixin, models.Model):
     title = models.CharField(max_length=200)
