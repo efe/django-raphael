@@ -20,7 +20,7 @@ class Book(RaphaelMixin, models.Model):
 # books/views.py
 
 async def retrieve_book(request, id: int):
-    book = await Book.objects.aget(id=id)
+    book = await Book.aobjects.aet(id=id)
     return JsonResponse({
         "id": book.id,
         "title": book.title,
@@ -28,7 +28,7 @@ async def retrieve_book(request, id: int):
     })
 
 async def create_book(request):
-    book = await Book.objects.acreate(
+    book = await Book.aobjects.create(
         title=request.body.get("title"),
         author=request.body.get("author"),
     )
@@ -39,6 +39,8 @@ async def create_book(request):
         "author": book.author,
     }, status=201)
 ```
+
+- `book.aobjects` returns the Tortoise ORM model.
 
 ## "raphael?"
 
