@@ -20,7 +20,7 @@ class Book(RaphaelMixin, models.Model):
 # books/views.py
 
 async def retrieve_book(request, id: int):
-    book = await Book.aobjects.aet(id=id)
+    book = await Book.aobjects.get(id=id)
     return JsonResponse({
         "id": book.id,
         "title": book.title,
