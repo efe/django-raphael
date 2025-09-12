@@ -3,7 +3,7 @@ version: "3.9"
 services:
   web:
     build: .
-    command: uvicorn test_project.asgi:application --host 0.0.0.0 --port 8000 --reload
+    command: uvicorn test_project.asgi:application --host 0.0.0.0 --port 8000 --reload --timeout-keep-alive 2
     volumes:
       - .:/app
     ports:
