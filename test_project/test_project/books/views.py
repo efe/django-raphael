@@ -1,5 +1,8 @@
 from django.http import JsonResponse, Http404
+
 from test_project.books.models import Book
+from test_project.books.tortoise_models import TortoiseBook
+
 
 def serialize_book(book):
     return {
@@ -35,8 +38,29 @@ async def retrieve_random_book_view_django_raphael_async(request):
     and returns it as JSON.
     """
     try:
-        book = await Book.aobjects.order_by("?").first()
+        book = await TortoiseBook.all().order_by("RANDOM()").first()
     except Book.DoesNotExist:
+        return JsonResponse({"detail": "Book not found"}, status=404)
+
+    return JsonResponse(serialize_book(book))
+
+
+async def retrieve_book_django_raphael_async(request, book_id):
+    try:
+        book = await TortoiseBook.get(id=book_id)
+    except Book.DoesNotExist:
+        return JsonResponse({"detail": "Book not found"}, status=404)
+
+    return JsonResponse(serialize_book(book))
+
+
+async def retrieve_book_django_orm_async(request, book_id: int):
+    """
+    Async view using Django's async ORM to retrieve a book by ID.
+    """
+    try:
+        book = await Book.objects.aget(id=book_id)
+    except Book.ObjectDoesNotExist:
         return JsonResponse({"detail": "Book not found"}, status=404)
 
     return JsonResponse(serialize_book(book))

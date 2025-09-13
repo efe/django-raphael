@@ -1,9 +1,7 @@
 from django.db import models
 
-from test_project.books.mixin import RaphaelMixin
 
-
-class Book(RaphaelMixin, models.Model):
+class Book(models.Model):
     isbn = models.CharField(max_length=13, unique=True)
 
     title = models.CharField(max_length=255)
